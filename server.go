@@ -24,7 +24,7 @@ func main() {
 		}
 		Log(conn.RemoteAddr().String(), " connect success")
 
-		handleConnect(conn)
+		go handleConnect(conn)
 	}
 }
 
