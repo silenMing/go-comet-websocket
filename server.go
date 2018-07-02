@@ -30,9 +30,9 @@ func main() {
 
 // 处理链接
 
-func handleConnect(conn net.Conn) {
+func handleConnect(conn net.Conn, timeout int) {
 	buffer := make([]byte, 2048)
-
+	messnager := make(chan byte)
 	for {
 		n, err := conn.Read(buffer)
 

@@ -26,7 +26,7 @@ func main() {
 }
 
 func sender(conn net.Conn) {
-	words := "hello world!"
+	words := "{'id':1}"
 	conn.Write([]byte(words))
 	fmt.Println("send over")
 
