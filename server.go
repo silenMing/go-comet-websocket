@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"go-comet-websocket/lib"
 	"log"
 	"net"
 	"os"
@@ -23,8 +24,8 @@ func main() {
 			continue
 		}
 		Log(conn.RemoteAddr().String(), " connect success")
-
-		go handleConnect(conn)
+		timeinterval := 5
+		go handleConnect(conn, timeinterval)
 	}
 }
 
@@ -41,6 +42,7 @@ func handleConnect(conn net.Conn, timeout int) {
 			return
 		}
 
+		go lib.Hearbeat(conn, messnager, timeout)
 		Log(conn.RemoteAddr().String(), "receive data string:\n", string(buffer[:n]))
 
 	}
