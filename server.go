@@ -41,8 +41,10 @@ func handleConnect(conn net.Conn, timeout int) {
 			Log(conn.RemoteAddr().String(), " connection error: ", err)
 			return
 		}
-
+		Data := (buffer[:n])
 		go lib.Hearbeat(conn, messnager, timeout)
+		//检测每次是否有数据传过来
+		go lib.CheckChannel(Data, messnager)
 		Log(conn.RemoteAddr().String(), "receive data string:\n", string(buffer[:n]))
 
 	}

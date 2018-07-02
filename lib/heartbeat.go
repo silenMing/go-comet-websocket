@@ -14,3 +14,10 @@ func Hearbeat(conn net.Conn, readerChannel chan byte, timeout int) {
 	default:
 	}
 }
+
+func CheckChannel(data []byte, mess chan byte) {
+	for _, v := range data {
+		mess <- v
+	}
+	close(mess)
+}
