@@ -34,7 +34,6 @@ func GetConfig() map[interface{}]interface{} {
 }
 
 func (jst *JsonStruct) GetFile(v interface{}) {
-	//ReadFile函数会读取文件的全部内容，并将结果以[]byte类型返回
 	dir := "conf"
 	for i := 0; i < 3; i++ {
 		if info, err := os.Stat(dir); err == nil && info.IsDir() {
@@ -48,7 +47,7 @@ func (jst *JsonStruct) GetFile(v interface{}) {
 		panic(err)
 	}
 
-	//读取的数据为json格式，需要进行解码
+	//解码
 	jsonData := json.Unmarshal(data, v)
 
 	if jsonData != nil {
