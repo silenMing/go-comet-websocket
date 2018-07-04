@@ -2,21 +2,30 @@ package main
 
 import (
 	"fmt"
+	"go-comet-websocket/conf"
 	"go-comet-websocket/lib"
 	"log"
 	"net"
 	"os"
+	"strconv"
 )
 
 func main() {
 
 	//建立socket
-	netListen, err := net.Listen("tcp", "127.0.0.1:9001")
+	configmap := conf.GetConfig()
+	var listen string
+	host := conf.GetElemetValue("Host", configmap)
+	port := conf.GetElemetValue("Port", configmap)
+	timeinterval, err := strconv.Atoi(conf.GetElemetValue("HeartbeatNum", configmap))
+	// heartbeatNum := configmap["HeartbeatNum"]
+	listen = host + ":" + port
+	// log.Print(configmap)
+	netListen, err := net.Listen("tcp", listen)
 	CheckError(err)
 	defer netListen.Close()
 
 	Log("wait client")
-
 	for {
 		conn, err := netListen.Accept()
 
@@ -24,7 +33,7 @@ func main() {
 			continue
 		}
 		Log(conn.RemoteAddr().String(), " connect success")
-		timeinterval := 5
+
 		go handleConnect(conn, timeinterval)
 	}
 }
